@@ -1,0 +1,30 @@
+envtools is a productivity suite for virtualenv-based projects. Here are some things you can do:
+ 
+    * addwork, rmwork, and lswork allow you to develop on several projects at once, 
+      while only "working on" one.
+    * More to come soon...
+
+To install:
+
+    $ python setup.py install
+
+To use addwork/rmwork/lswork:
+
+    # Using virtualenv, start working on your primary project.
+    $ workon myfavoriteproject
+
+    # Next, addwork on a dependent module.
+    (myfavoriteproject) $ addwork subproject1
+
+    # See how fun:
+    (myfavoriteproject) $ lswork
+    subproject1
+    (myfavoriteproject) $ python -c "from subproject1 import *"
+
+    # Say goodbye
+    (myfavrotieproject) $ rmwork subproject1
+    (myfavoriteproject) $ lswork
+    (myfavoriteproject) $ python -c "from subproject1 import *"
+    Traceback (most recent call last):
+      File "<string>", line 1, in <module>
+    ImportError: No module named subproject1

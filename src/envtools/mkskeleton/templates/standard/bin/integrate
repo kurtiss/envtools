@@ -1,0 +1,58 @@
+#!/usr/bin/env __UNSOURCED=1 /bin/bash
+
+# setup
+__integrate_usage() {
+    local CMDNAME="$1"
+    cat <<EOF
+Usage: source $CMDNAME [-h]
+Source this file to run all analysis necessary for a Jenkins/Hudson integration.
+
+Options:
+EOF
+
+    cat <<EOF | column -s\& -t
+-h & Display this help and exit.
+EOF
+}
+
+__integrate() {
+    local CMDNAME="integrate"
+    local USAGE="__integrate_usage $CMDNAME"
+
+    if [ "$__UNSOURCED" ]; then
+        eval $USAGE
+        exit 1
+    fi
+    
+    local SET_PARAMS=`getopt h $* 2>/dev/null`
+    eval set -- "$SET_PARAMS"
+
+    while true; do
+        case "$1" in
+            -h)
+                eval $USAGE
+                return 0
+            ;;
+            --)
+                shift
+                break
+            ;;
+        esac
+        shift
+    done
+
+    nosetests \
+        --source-folder="$VIRTUAL_ENV/src" \
+        --with-nosexunit \
+        --enable-audit \
+        --audit-output="parseable" \
+        --enable-cover \
+        $VIRTUAL_ENV/src/$TESTSUITE_MODULE/all.py
+}
+
+# execute
+eval __integrate $*
+
+# tear down
+unset __integrate_usage
+unset __integrate

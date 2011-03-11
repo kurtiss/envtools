@@ -1,0 +1,3 @@
+unittest2
+nosexunit
+git+git://github.com/kurtiss/pymox.git#egg=pymox

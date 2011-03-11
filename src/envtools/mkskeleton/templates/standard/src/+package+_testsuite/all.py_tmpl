@@ -1,0 +1,13 @@
+#!/usr/bin/env python
+# encoding: utf-8
+"""
+__init__.py
+
+Created by ${author} on ${now}.${copyright}
+"""
+
+# from ${package}_testsuite.sample import SampleTest
+
+cases = [
+    # SampleTest,
+]

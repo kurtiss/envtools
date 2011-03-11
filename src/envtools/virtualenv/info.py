@@ -74,6 +74,10 @@ class VirtualEnvInfo(object):
                 self._workfile = self.default_workfile
         return self._workfile
     
+    @cachedprop
+    def path_extensions(self):
+        return "{0}/virtualenv_path_extensions.pth".format(self.site_packages_dir)
+    
     def validate(self):
         if not os.path.isdir(self.workon_home):
             raise RuntimeError("Cannot locate WORKON_HOME directory at {0}.".format(self.workon_home))

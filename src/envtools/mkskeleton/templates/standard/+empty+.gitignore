@@ -1,0 +1,58 @@
+# mac cruft
+.DS_Store
+
+#emacs cruft
+*~
+*#*
+*flymake.py
+.ropeproject
+
+# vim cruft
+*.swp
+
+# wing cruft
+*.wpr
+
+#buildout/virtualenv cruft
+bin/*
+build/*
+lib
+include
+share
+.Python
+bootstrap.py
+develop-eggs
+.installed.cfg
+
+#python cruft
+*.egg
+*.egg-info
+.noseids
+*prof*
+pip-log.txt
+*.pyc
+
+# test cruft
+.coverage
+nosetests.xml # nosexunit
+man/* # nosexunit
+target/* # nosexunit
+
+# Sphinx cruft
+_build
+
+# backup cruft
+*.old
+
+# Misc cruft
+*.log
+*.pid
+
+# envtools stuff
+.envtools
+
+# project-specific overrides
+!bin/install
+!bin/integrate
+!bin/postactivate
+!bin/predeactivate

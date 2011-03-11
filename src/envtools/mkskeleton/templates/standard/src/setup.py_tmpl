@@ -1,0 +1,31 @@
+#!/usr/bin/env python
+# encoding: utf-8
+"""
+__init__.py
+
+Created by ${author} on ${now}.${copyright}
+"""
+
+from setuptools import setup, find_packages
+import os
+
+execfile(os.path.join('src', '${package}', 'version.py'))
+
+setup(
+    name = ${repr(project)},
+    version = VERSION,
+    description = '${project} does good things.',
+    author = ${repr(author)},
+    author_email = ${repr(author_email)},
+    url = ${repr(project_url)},
+    packages = [p for p in find_packages('src') if re.match('${package}(?:\.|$$)', p)],
+    package_dir = {'':'src'}
+    scripts = [],
+    classifiers = [
+        # http://pypi.python.org/pypi?%3Aaction=list_classifiers
+    ],
+    install_requires = [
+        # additional dependencies
+    ],
+    zip_safe = False
+)

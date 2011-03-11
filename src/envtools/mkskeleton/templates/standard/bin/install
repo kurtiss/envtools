@@ -1,0 +1,69 @@
+#!/usr/bin/env __UNSOURCED=1 /bin/bash
+
+# setup
+__install_usage() {
+    local CMDNAME="$1"
+    cat <<EOF
+Usage: source $CMDNAME [-tuh]
+Source this file to install this module and all its dependencies.
+
+Options:
+EOF
+
+    cat <<EOF | column -s\& -t
+-t & Include dependencies necessary for testing.
+-u & Perform a forced replacement of all dependencies.
+-h & Display this help and exit.
+EOF
+}
+
+__install() {
+    local CMDNAME="install"
+    local USAGE="__install_usage $CMDNAME"
+
+    if [ "$__UNSOURCED" ]; then
+        eval $USAGE
+        exit 1
+    fi
+    
+    local SET_PARAMS=`getopt tuh $* 2>/dev/null`
+    eval set -- "$SET_PARAMS"
+
+    local INSTALL_TESTS=0
+    local UPGRADE_REQUIREMENTS=""
+    local REQUIREMENTS="$VIRTUAL_ENV/etc/pip/requirements.txt"
+    local TEST_REQUIREMENTS="$VIRTUAL_ENV/etc/pip/testing.txt"
+
+    while true; do
+        case "$1" in
+            -h)
+                eval $USAGE
+                return 0
+            ;;
+            -t)
+                INSTALL_TESTS=1;
+            ;;
+            -u)
+                UPGRADE_REQUIREMENTS="--upgrade"
+            ;;
+            --)
+                shift
+                break
+            ;;
+        esac
+        shift
+    done
+
+    pip install $UPGRADE_REQUIREMENTS -r "$REQUIREMENTS"
+
+    if [ "$INSTALL_TESTS" -gt "0" ] && [ -e "$TEST_REQUIREMENTS" ]; then
+        pip install $UPGRADE_REQUIREMENTS -r "$TEST_REQUIREMENTS"
+    fi
+}
+
+# execute
+__install $*
+
+# tear down
+unset __install_usage
+unset __install

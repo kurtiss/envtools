@@ -1,0 +1,5 @@
+#!/bin/bash
+# This hook is run after this virtualenv is activated.
+
+merge2virtualenv $$VIRTUAL_ENV/src
+TESTSUITE_MODULE="${package}_testsuite"
